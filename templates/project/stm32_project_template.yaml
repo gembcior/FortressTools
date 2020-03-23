@@ -1,0 +1,46 @@
+---
+root:
+  - cmake:
+    - defaults:
+      - stm32_cache.cmake : stm32_cache.tff
+      - unittest_cache.cmake : stm32_uinttest_cache.tff
+    - modules:
+      - directories.cmake : stm32_directories.tff
+    - toolchain:
+      - gcc_stm32f4.cmake : gcc_stm32f4.tff
+      - gcc_native.cmake : gcc_native.tff
+  - cubemx:
+  - source:
+    - main:
+      - headers:
+        - main.h
+      - CMakeLists.txt
+      - main.cpp
+    - crt:
+      - CMakeLists.txt
+    - cubemx:
+      - headers:
+      - CMakeLists.txt
+    - hal:
+      - headers:
+        - hal_cpu.h
+        - ihal_gpio.h
+        - hal_gpio.h
+        - ihalp_uart.h
+        - hal_uart.h
+      - CMakeLists.txt
+      - hal_gpio.cpp
+      - hal_uart.cpp
+      - hal_startup.cpp
+    - trace:
+      - headers:
+        - string_stream.h
+        - trace.h
+        - uart_trace.h
+      - CMakeLists.txt
+      - string_stream.cpp
+      - trace.cpp
+      - uart_trace.cpp
+  - tests:
+  - CMakeLists.txt : stm32_cmake_main.ftt
+
