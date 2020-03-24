@@ -18,7 +18,12 @@ class FtSTM32Project(FtBaseProject):
 
     def _parse_project_template(self):
         project_template_file = os.path.join(self.settings["templates"], "project/stm32_project_template.yaml")
-        self.project_template_parser.run(project_template_file)
+        self.project_template_parser.load(project_template_file)
+        directories, files = self.project_template_parser.get_project_items()
+        print("DIRECTORIES")
+        print(directories)
+        print("FILES")
+        print(files)
 
 
     def create_new_project(self):

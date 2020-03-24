@@ -1,46 +1,52 @@
 ---
 root:
-  - cmake:
-    - defaults:
-      - stm32_cache.cmake : stm32_cache.tff
-      - unittest_cache.cmake : stm32_uinttest_cache.tff
-    - modules:
-      - directories.cmake : stm32_directories.tff
-    - toolchain:
-      - gcc_stm32f4.cmake : gcc_stm32f4.tff
-      - gcc_native.cmake : gcc_native.tff
-  - cubemx:
-  - source:
-    - main:
-      - headers:
-        - main.h
-      - CMakeLists.txt
-      - main.cpp
-    - crt:
-      - CMakeLists.txt
-    - cubemx:
-      - headers:
-      - CMakeLists.txt
-    - hal:
-      - headers:
-        - hal_cpu.h
-        - ihal_gpio.h
-        - hal_gpio.h
-        - ihalp_uart.h
-        - hal_uart.h
-      - CMakeLists.txt
-      - hal_gpio.cpp
-      - hal_uart.cpp
-      - hal_startup.cpp
-    - trace:
-      - headers:
-        - string_stream.h
-        - trace.h
-        - uart_trace.h
-      - CMakeLists.txt
-      - string_stream.cpp
-      - trace.cpp
-      - uart_trace.cpp
-  - tests:
-  - CMakeLists.txt : stm32_cmake_main.ftt
+  cmake:
+    defaults:
+      stm32_cache.cmake : stm32_cache.tff
+      unittest_cache.cmake : stm32_uinttest_cache.tff
+    modules:
+      directories.cmake : stm32_directories.tff
+    toolchain:
+      gcc_stm32f4.cmake : gcc_stm32f4.tff
+      gcc_native.cmake : gcc_native.tff
+  cubemx:
+  source:
+    main:
+      inc:
+        main.h : main.tff
+      src:
+        main.cpp : main.tff
+      CMakeLists.txt : CMakeLists.tff
+    crt:
+      inc:
+      src:
+      CMakeLists.txt : CMakeLists.tff
+    cubemx:
+      inc:
+        cubemx:
+      src:
+      CMakeLists.txt : CMakeLists.tff
+    hal:
+      inc:
+        hal:
+          hal_cpu.h : hal_cpu.tff
+          hal_gpio.h : hal_gpio.tff
+          hal_uart.h : hal_uart.tff
+      src:
+        hal_gpio.cpp : hal_gpio.tff
+        hal_uart.cpp : hal_uart.tff
+        hal_startup.cpp : hal_startup.tff
+      CMakeLists.txt : CMakeLists.tff
+    trace:
+      inc:
+        trace:
+          string_stream.h : string_stream.tff
+          trace.h : trace.tff
+          uart_trace.h : uart_trace.tff
+      src:
+        string_stream.cpp : string_stream.tff
+        trace.cpp : trace.tff
+        uart_trace.cpp : uart_trace.tff
+      CMakeLists.txt : CMakeLists.tff
+  CMakeLists.txt : stm32_cmake_main.ftt
 
