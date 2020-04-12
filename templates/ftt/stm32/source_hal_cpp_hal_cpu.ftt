@@ -1,0 +1,17 @@
+#include "cubemx.h"
+#include "hal/hal_cpu.h"
+
+namespace stm32::hal {
+
+void HalCpu::setup()
+{
+  SystemClock_Config();
+}
+
+void HalCpu::delay(uint32_t delay)
+{
+  HAL_Delay(delay);
+}
+
+
+} // namespace

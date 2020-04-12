@@ -1,0 +1,60 @@
+# This variables must be set before use
+# STM32_FAMILY
+# STM32Cube_DIR
+
+set(HAL_COMPONENTS adc can cec cortex crc cryp dac dcmi dma dma2d eth flash
+                   flash_ramfunc fmpi2c gpio hash hcd i2c i2s irda iwdg ltdc
+                   nand nor pccard pcd pwr qspi rcc rng rtc sai sd sdram
+                   smartcard spdifrx spi sram tim uart usart wwdg
+)
+
+set(HAL_EX_COMPONENTS adc cryp dac dcmi dma flash fmpi2c hash i2c i2s pcd
+                      pwr rcc rtc sai tim
+)
+
+set(HAL_PREFIX stm32f4xx_)
+
+set(HAL_HEADERS
+  ${HAL_PREFIX}hal.h
+  ${HAL_PREFIX}hal_def.h
+)
+
+set(HAL_SOURCES
+  ${HAL_PREFIX}hal.c
+)
+
+foreach(component ${HAL_COMPONENTS})
+    list(APPEND HAL_HEADERS ${HAL_PREFIX}hal_${component}.h)
+    list(APPEND HAL_SOURCES ${HAL_PREFIX}hal_${component}.c)
+    list(FIND HAL_EX_COMPONENTS ${component} STM32HAL_FOUND_INDEX)
+    if(NOT (${STM32HAL_FOUND_INDEX} LESS 0))
+        list(APPEND HAL_HEADERS ${HAL_PREFIX}hal_${component}_ex.h)
+        list(APPEND HAL_SOURCES ${HAL_PREFIX}hal_${component}_ex.c)
+    endif()
+endforeach()
+
+list(REMOVE_DUPLICATES HAL_HEADERS)
+list(REMOVE_DUPLICATES HAL_SOURCES)
+
+string(TOLOWER ${STM32_FAMILY} STM32_FAMILY_LOWER)
+
+find_path(STM32HAL_INCLUDE_DIR ${HAL_HEADERS}
+    PATH_SUFFIXES include stm32${STM32_FAMILY_LOWER}
+    HINTS ${STM32Cube_DIR}/Drivers/STM32${STM32_FAMILY}xx_HAL_Driver/Inc
+    CMAKE_FIND_ROOT_PATH_BOTH
+)
+
+foreach(source ${HAL_SOURCES})
+  string(MAKE_C_IDENTIFIER "${HAL_SOURCES}" HAL_SOURCES_CLEAN)
+  set(HAL_${HAL_SOURCES_CLEAN}_FILE HAL_SOURCE_FILE-NOTFOUND)
+    find_file(HAL_${HAL_SOURCES_CLEAN}_FILE ${source}
+        PATH_SUFFIXES src stm32${STM32_FAMILY_LOWER}
+        HINTS ${STM32Cube_DIR}/Drivers/STM32${STM32_FAMILY}xx_HAL_Driver/Src
+        CMAKE_FIND_ROOT_PATH_BOTH
+    )
+  list(APPEND STM32HAL_SOURCES ${HAL_${HAL_SOURCES_CLEAN}_FILE})
+endforeach()
+
+include(FindPackageHandleStandardArgs)
+
+find_package_handle_standard_args(STM32HAL DEFAULT_MSG STM32HAL_INCLUDE_DIR STM32HAL_SOURCES)

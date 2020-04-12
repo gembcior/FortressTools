@@ -1,6 +1,5 @@
 ---
-stm32:
-  project:
-    - name: "STM32FtProject"
-    - stm32_toolchain: "toolchain"
-    - native_toolchain: "native"
+project:
+  - name: "STM32FtProject"
+  - stm32_toolchain: "toolchain"
+  - native_toolchain: "native"

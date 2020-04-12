@@ -1,0 +1,23 @@
+#include "hal/hal_spi.h"
+#include "cubemx/spi.h"
+
+namespace stm32::hal {
+
+HalSpi::HalSpi(SPI_HandleTypeDef& spi)
+  : m_spi(spi)
+{
+}
+
+
+void HalSpi::setup()
+{
+  MX_SPI2_Init();
+}
+
+
+void HalSpi::writeAndRead(uint8_t *pTxData, uint8_t *pRxData, uint16_t size)
+{
+  HAL_SPI_TransmitReceive(&m_spi, pTxData, pRxData, size, HAL_MAX_DELAY);
+}
+
+} // namespace

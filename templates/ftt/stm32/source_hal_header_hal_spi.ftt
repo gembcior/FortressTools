@@ -1,0 +1,23 @@
+#ifndef HAL_SPI_H
+#define HAL_SPI_H
+
+#include <cstdint>
+#include "cubemx/cubemx.h"
+
+namespace stm32::hal {
+
+class HalSpi
+{
+public:
+  HalSpi(SPI_HandleTypeDef& spi);
+
+  void setup();
+  void writeAndRead(uint8_t *pTxData, uint8_t *pRxData, uint16_t size);
+
+private:
+  SPI_HandleTypeDef& m_spi;
+};
+
+} // namespace
+
+#endif /* HAL_SPI_H */

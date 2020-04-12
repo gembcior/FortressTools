@@ -2,51 +2,65 @@
 root:
   cmake:
     defaults:
-      stm32_cache.cmake : stm32_cache.tff
-      unittest_cache.cmake : stm32_uinttest_cache.tff
+      stm32_cache.cmake : cmake_defaults_stm32_cache.ftt
+      unittest_cache.cmake : cmake_defaults_uinttest_cache.ftt
     modules:
-      directories.cmake : stm32_directories.tff
+      FindCMSIS.cmake : cmake_modules_find_cmsis.ftt
+      FindSTM32HAL.cmake : cmake_modules_find_stm32_hal.ftt
+      FindSTM32LL.cmake : cmake_modules_find_stm32_ll.ftt
+      directories.cmake : cmake_modules_directories.ftt
     toolchain:
-      gcc_stm32f4.cmake : gcc_stm32f4.tff
-      gcc_native.cmake : gcc_native.tff
+      gcc_stm32f4.cmake : cmake_toolchain_gcc_stm32.ftt
+      gcc_native.cmake : cmake_toolchain_gcc_native.ftt
   cubemx:
+  utils:
+    openocd.cfg : utils_openocd.ftt
   source:
     main:
-      inc:
-        main.h : main.tff
       src:
-        main.cpp : main.tff
-      CMakeLists.txt : CMakeLists.tff
+        main.h : source_main_header_main.ftt
+        startup.h : source_main_header_startup.ftt
+        main.cpp : source_main_cpp_main.ftt
+        startup.cpp : source_main_cpp_startup.ftt
+      CMakeLists.txt : source_main_cmakelists.ftt
     crt:
-      inc:
-      src:
-      CMakeLists.txt : CMakeLists.tff
+      linker_script.ld : source_crt_linker_script.ftt
+      startup.s : source_crt_startup.ftt
+      CMakeLists.txt : source_crt_cmakelists.ftt
     cubemx:
       inc:
         cubemx:
       src:
-      CMakeLists.txt : CMakeLists.tff
+      CMakeLists.txt : source_cubemx_cmakelists.ftt
+    irq:
+      inc:
+        irq:
+          irq.h : source_irq_header_irq.ftt
+      src:
+        irq.cpp : source_irq_cpp_irq.ftt
+      CMakeLists.txt : source_irq_cmakelists.ftt
     hal:
       inc:
         hal:
-          hal_cpu.h : hal_cpu.tff
-          hal_gpio.h : hal_gpio.tff
-          hal_uart.h : hal_uart.tff
+          hal_cpu.h : source_hal_header_hal_cpu.ftt
+          hal_gpio.h : source_hal_header_hal_gpio.ftt
+          hal_uart.h : source_hal_header_hal_uart.ftt
       src:
-        hal_gpio.cpp : hal_gpio.tff
-        hal_uart.cpp : hal_uart.tff
-        hal_startup.cpp : hal_startup.tff
-      CMakeLists.txt : CMakeLists.tff
+        hal_gpio.cpp : source_hal_cpp_hal_gpio.ftt
+        hal_uart.cpp : source_hal_cpp_hal_uart.ftt
+        hal_cpu.cpp : source_hal_cpp_hal_cpu.ftt
+      CMakeLists.txt : source_hal_cmakelists.ftt
     trace:
       inc:
         trace:
-          string_stream.h : string_stream.tff
-          trace.h : trace.tff
-          uart_trace.h : uart_trace.tff
+          string_stream.h : source_trace_header_string_stream.ftt
+          trace.h : source_trace_header_trace.ftt
+          uart_trace.h : source_trace_header_uart_trace.ftt
       src:
-        string_stream.cpp : string_stream.tff
-        trace.cpp : trace.tff
-        uart_trace.cpp : uart_trace.tff
-      CMakeLists.txt : CMakeLists.tff
-  CMakeLists.txt : stm32_cmake_main.ftt
+        string_stream.cpp : source_trace_cpp_string_stream.ftt
+        trace.cpp : source_trace_cpp_trace.ftt
+        uart_trace.cpp : source_trace_cpp_uart_trace.ftt
+      CMakeLists.txt : source_cmakelists.ftt
+  CMakeLists.txt : cmakelists.ftt
+  .gitignore : gitignore.ftt
 

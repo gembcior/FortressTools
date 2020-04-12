@@ -2,8 +2,8 @@ import yaml
 import os
 
 class ProjectTemplateParser:
-    def __init__(self):
-        self.template = None
+    def __init__(self, template_file):
+        self.template = yaml.load(open(template_file, 'r'), Loader=yaml.FullLoader)["root"]
 
     def _get_files_and_directories(self, data, directories, files, previous_dir=""):
         for x in data:

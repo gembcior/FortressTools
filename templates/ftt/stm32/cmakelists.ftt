@@ -1,0 +1,30 @@
+cmake_minimum_required(VERSION 3.15)
+project([ftt]project.name[#ftt])
+
+include(ExternalProject)
+
+ExternalProject_Add(stm32
+  PREFIX            stm32
+  SOURCE_DIR        "${CMAKE_CURRENT_SOURCE_DIR}/source"
+  TEST_COMMAND      ""
+  STEP_TARGETS      configure install
+  BUILD_ALWAYS      TRUE
+  CMAKE_ARGS        -C ${CMAKE_CURRENT_SOURCE_DIR}/cmake/defaults/stm32_cache.cmake
+                    -DCMAKE_INSTALL_PREFIX=${CMAKE_CURRENT_BINARY_DIR}
+                    -DCMAKE_TOOLCHAIN_FILE=${CMAKE_CURRENT_SOURCE_DIR}/cmake/toolchain/[ftt]project.stm32_toolchain[#ftt]
+                    -DCMAKE_BUILD_TYPE=Release
+)
+
+if(WIP)
+  ExternalProject_Add(unit_tests
+    PREFIX              unit_tests
+    SOURCE_DIR          "${CMAKE_CURRENT_SOURCE_DIR}/tests"
+    INSTALL_COMMAND     ""
+    TEST_AFTER_INSTALL  TRUE
+    STEP_TARGETS        configure install test
+    BUILD_ALWAYS        TRUE
+    CMAKE_ARGS          -C ${CMAKE_CURRENT_SOURCE_DIR}/cmake/defaults/unittest_cache.cmake
+                        -DCMAKE_INSTALL_PREFIX=${CMAKE_CURRENT_BINARY_DIR}
+                        -DCMAKE_BUILD_TYPE=Release
+  )
+endif()
