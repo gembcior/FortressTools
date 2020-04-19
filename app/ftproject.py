@@ -33,9 +33,9 @@ def main():
     settings["stm32cubemx_project"] = os.path.abspath("/home/tgebka/workspace/cubemx.ioc")
     settings["stm32cube"] = os.path.abspath("/home/tgebka/tools/STM32/STM32Cube/STM32Cube_FW_F4_V1.25.0")
     settings["toolchain"] = os.path.abspath("/home/tgebka/tools/toolchain/gcc-arm-none-eabi-9-2019-q4-major")
-    settings["stm32_chip"] = "STM32F411RE"
-    settings["stm32_family"] = "F4"
-    settings["stm32_chip_type"] = "411xE"
+    settings["stm32_chip"] = "stm32f411"
+    settings["stm32_family"] = "f4"
+    settings["stm32_chip_type"] = "xe"
 
 
     if args.project_type == "cpp":

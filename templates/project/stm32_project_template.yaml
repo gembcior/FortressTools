@@ -1,9 +1,9 @@
 ---
-root:
+structure:
   cmake:
     defaults:
       stm32_cache.cmake : cmake_defaults_stm32_cache.ftt
-      unittest_cache.cmake : cmake_defaults_uinttest_cache.ftt
+      unittest_cache.cmake : cmake_defaults_unittest_cache.ftt
     modules:
       FindCMSIS.cmake : cmake_modules_find_cmsis.ftt
       FindSTM32HAL.cmake : cmake_modules_find_stm32_hal.ftt
@@ -24,8 +24,8 @@ root:
         startup.cpp : source_main_cpp_startup.ftt
       CMakeLists.txt : source_main_cmakelists.ftt
     crt:
-      linker_script.ld : source_crt_linker_script.ftt
-      startup.s : source_crt_startup.ftt
+      linker_script.ld : None
+      startup.s : None
       CMakeLists.txt : source_crt_cmakelists.ftt
     cubemx:
       inc:
@@ -63,4 +63,8 @@ root:
       CMakeLists.txt : source_cmakelists.ftt
   CMakeLists.txt : cmakelists.ftt
   .gitignore : gitignore.ftt
-
+params:
+  project:
+  - name: "STM32FtProject"
+  - stm32_toolchain: "toolchain"
+  - native_toolchain: "native"

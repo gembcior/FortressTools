@@ -1,7 +1,6 @@
 import logging
 import os
 from ..parser.project.project_template_parser import ProjectTemplateParser
-from ..parser.project.project_params_parser import ProjectParamsParser
 
 
 class FtBaseProject:
@@ -33,18 +32,19 @@ class FtBaseProject:
             os.makedirs(path, exist_ok=True)
 
     def _create_files(self, files):
-        project_params_parser = ProjectParamsParser(self.project_params_file)
+        project_params_parser = ProjectTemplateParser(self.project_template_file)
         for file in files:
-            template_file = os.path.join(self.settings["templates"], "ftt", self.settings["type"], files[file])
-            if not os.path.exists(template_file):
-                self.log.warning("Missing template file: " + template_file)
-                continue
-            else:
-                with open(template_file, 'r') as template:
-                    for line in template.readlines():
-                        output_file = os.path.join(self.settings["workspace"], self.settings["name"], file)
-                        with open(output_file, 'a') as output_file_temp:
-                            output_file_temp.write(project_params_parser.get_line(line))
+            if files[file] != "None":
+                template_file = os.path.join(self.settings["templates"], "ftt", self.settings["type"], files[file])
+                if not os.path.exists(template_file):
+                    self.log.warning("Missing template file: " + template_file)
+                    continue
+                else:
+                    with open(template_file, 'r') as template:
+                        for line in template.readlines():
+                            output_file = os.path.join(self.settings["workspace"], self.settings["name"], file)
+                            with open(output_file, 'a') as output_file_temp:
+                                output_file_temp.write(project_params_parser.get_line(line))
 
     def _setup_phase(self):
         self.log.debug("_setup_phase".upper())
@@ -53,9 +53,7 @@ class FtBaseProject:
         self.project_template_file = os.path.join(self.settings["templates"], "project", self.settings["project_template"])
         if not os.path.exists(self.project_template_file):
             raise Exception()
-        self.project_params_file = os.path.join(self.settings["templates"], "params", self.settings["project_params"])
-        if not os.path.exists(self.project_params_file):
-            raise Exception()
+        self.project_directory = os.path.join(self.settings["workspace"], self.settings["name"])
 
     def _pre_project_structure_phase(self):
         self.log.debug("_pre_project_structure_phase".upper())
@@ -63,9 +61,9 @@ class FtBaseProject:
     def _project_structure_phase(self):
         self.log.debug("_project_structure_phase".upper())
         project_template_parser = ProjectTemplateParser(self.project_template_file)
-        directories, files = project_template_parser.get_project_items()
+        directories, self.files = project_template_parser.get_project_items()
         self._create_directories(directories)
-        self._create_files(files)
+        self._create_files(self.files)
 
     def _post_project_structure_phase(self):
         self.log.debug("_post_project_structure".upper())
