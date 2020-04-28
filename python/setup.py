@@ -5,13 +5,13 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="FortressTools",
-    version="0.0.2",
+    version="0.0.3",
     author="mywayof.dev",
-    author_email="mywayof.dev@gmail.com",
+    author_email="gembcior@gmail.com",
     description="Personal Tools for development",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="http://gogs.gembcior.pl/Gembcior/FortressTools.git",
+    url="https://github.com/gembcior/FortressTools.git",
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
