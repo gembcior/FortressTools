@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="FortressTools",
-    version="0.0.3",
+    version="0.0.4",
     author="mywayof.dev",
     author_email="gembcior@gmail.com",
     description="Personal Tools for development",
