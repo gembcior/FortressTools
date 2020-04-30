@@ -3,8 +3,14 @@ import os
 
 class ProjectTemplateParser:
     def __init__(self, template_file):
-        self.template = yaml.load(open(template_file, 'r'), Loader=yaml.FullLoader)["structure"]
-        self.params = yaml.load(open(template_file, 'r'), Loader=yaml.FullLoader)["params"]
+        try:
+            self.template = yaml.load(open(template_file, 'r'), Loader=yaml.FullLoader)["structure"]
+        except Exception:
+            self.template = []
+        try:
+            self.params = yaml.load(open(template_file, 'r'), Loader=yaml.FullLoader)["params"]
+        except Exception:
+            self.params = []
         self.begin_marker = "[ftt]"
         self.end_marker = "[#ftt]"
 
@@ -20,13 +26,23 @@ class ProjectTemplateParser:
                 directories.append(os.path.join(previous_dir, x))
 
     def load(self, template_file):
-        self.template = yaml.load(open(template_file, 'r'), Loader=yaml.FullLoader)["structure"]
-        self.params = yaml.load(open(params_file, 'r'), Loader=yaml.FullLoader)["params"]
+        try:
+            self.template = yaml.load(open(template_file, 'r'), Loader=yaml.FullLoader)["structure"]
+        except Exception:
+            self.template = []
+        try:
+            self.params = yaml.load(open(template_file, 'r'), Loader=yaml.FullLoader)["params"]
+        except Exception:
+            self.params = []
 
     def get_project_items(self):
         directories = []
         files = {}
-        self._get_files_and_directories(self.template, directories, files)
+        try:
+            self._get_files_and_directories(self.template, directories, files)
+        except Exception:
+            directories = []
+            files = {}
         return directories, files
 
     def get_line(self, line):

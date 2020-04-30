@@ -1,8 +1,8 @@
 import argparse
-from fortress_tools.projects.cpp_project import FtCppProject
-from fortress_tools.projects.stm32_project import FtSTM32Project
-from fortress_tools.projects.qt_project import FtQtProject
-from fortress_tools.projects.base_project import FtBaseProject
+from FortressTools.projects.cpp_project import FtCppProject
+from FortressTools.projects.stm32_project import FtSTM32Project
+from FortressTools.projects.qt_project import FtQtProject
+from FortressTools.projects.base_project import FtBaseProject
 import os
 
 

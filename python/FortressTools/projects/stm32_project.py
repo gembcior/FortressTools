@@ -36,7 +36,7 @@ class FtSTM32Project(FtBaseProject):
     def _copy_linker_script(self):
         path_pattern = re.compile(".*Projects/.*/Templates/SW4STM32.*")
         linker_script_pattern = ".*Linker script for " + self.settings["stm32_chip"].upper()
-        if self.settings["stm32_chip_type"] is "xe":
+        if self.settings["stm32_chip_type"] == "xe":
             linker_script_pattern += "RETx.*"
         else:
             linker_script_pattern += "RETx.*"

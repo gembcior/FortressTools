@@ -28,7 +28,7 @@ class FtBaseProject:
 
     def _create_directories(self, directories):
         for directory in directories:
-            path = os.path.join(self.settings["workspace"], self.settings["name"], directory)
+            path = os.path.join(self.project_directory, directory)
             os.makedirs(path, exist_ok=True)
 
     def _create_files(self, files):
@@ -46,6 +46,12 @@ class FtBaseProject:
                             with open(output_file, 'a') as output_file_temp:
                                 output_file_temp.write(project_params_parser.get_line(line))
 
+    def _create_config_file(self):
+        project_config_file = os.path.join(self.project_directory, "project.ft")
+        with open(project_config_file, "a") as file:
+            for setting in self.settings:
+                file.write("%s: %s\n" % (setting, self.settings[setting]))
+
     def _setup_phase(self):
         self.log.debug("_setup_phase".upper())
         if not os.path.exists(self.settings["workspace"]):
@@ -60,6 +66,10 @@ class FtBaseProject:
 
     def _project_structure_phase(self):
         self.log.debug("_project_structure_phase".upper())
+        try:
+            os.mkdir(self.project_directory)
+        except FileExistsError:
+            raise Exception("Project %s already exists!" % self.project_directory)
         project_template_parser = ProjectTemplateParser(self.project_template_file)
         directories, self.files = project_template_parser.get_project_items()
         self._create_directories(directories)
@@ -82,6 +92,7 @@ class FtBaseProject:
 
     def _final_phase(self):
         self.log.debug("_final_phase".upper())
+        self._create_config_file()
 
     def make(self):
         self._setup_phase()
