@@ -1,6 +1,7 @@
 import logging
 import os
 from ..parser.project.project_template_parser import ProjectTemplateParser
+from ..logger.logger import FtLogger
 
 
 class FtBaseProject:
@@ -15,16 +16,10 @@ class FtBaseProject:
 
     def _start_logging(self, name):
         if self.settings["verbose"] is True:
-            log_verbose = logging.DEBUG
+            log_verbose = "DEBUG"
         else:
-            log_verbose = logging.INFO
-        self.log = logging.getLogger(name)
-        self.log.setLevel(log_verbose)
-        self.log_handler = logging.StreamHandler()
-        self.log_handler.setLevel(log_verbose)
-        self.log_formatter = logging.Formatter("[%(levelname)s][%(name)s] %(message)s")
-        self.log_handler.setFormatter(self.log_formatter)
-        self.log.addHandler(self.log_handler)
+            log_verbose = "INFO"
+        self.log = FtLogger.get_logger(name, log_verbose)
 
     def _create_directories(self, directories):
         for directory in directories:
