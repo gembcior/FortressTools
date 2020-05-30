@@ -1,4 +1,0 @@
-set(CMAKE_DIR ${CMAKE_SOURCE_DIR}/cmake)
-set(CUBEMX_DIR ${CMAKE_SOURCE_DIR}/cubemx)
-set(SOURCE_DIR ${CMAKE_SOURCE_DIR}/source)
-set(TESTS_DIR ${CMAKE_SOURCE_DIR}/tests)

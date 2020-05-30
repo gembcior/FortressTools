@@ -5,17 +5,13 @@ from ..logger.logger import FtLogger
 
 
 class FtBaseProject:
-    def __init__(self, settings):
+    def __init__(self, settings, verbose=False):
         self.settings = settings
-        must_args = ["name", "workspace", "templates"]
-        if not all(arg in self.settings for arg in must_args):
-            raise Exception("Missing required settings for " + self.__class__.__name__)
-        if "verbose" not in self.settings:
-            self.settings["verbose"] = False
+        self.verbose = verbose
         self._start_logging(self.__class__.__name__)
 
     def _start_logging(self, name):
-        if self.settings["verbose"] is True:
+        if self.verbose is True:
             log_verbose = "DEBUG"
         else:
             log_verbose = "INFO"
@@ -23,38 +19,33 @@ class FtBaseProject:
 
     def _create_directories(self, directories):
         for directory in directories:
-            path = os.path.join(self.project_directory, directory)
+            path = os.path.join(self.settings.project_directory, directory)
             os.makedirs(path, exist_ok=True)
 
     def _create_files(self, files):
         project_params_parser = ProjectTemplateParser(self.project_template_file)
         for file in files:
             if files[file] != "None":
-                template_file = os.path.join(self.settings["templates"], "ftt", self.settings["type"], files[file])
+                template_file = os.path.join(self.settings.templates, "ftt", self.settings.project_type, files[file])
                 if not os.path.exists(template_file):
                     self.log.warning("Missing template file: " + template_file)
                     continue
                 else:
                     with open(template_file, 'r') as template:
                         for line in template.readlines():
-                            output_file = os.path.join(self.settings["workspace"], self.settings["name"], file)
+                            output_file = os.path.join(self.settings.workspace, self.settings.name, file)
                             with open(output_file, 'a') as output_file_temp:
-                                output_file_temp.write(project_params_parser.get_line(line))
+                                output_file_temp.write(project_params_parser.get_line(line, self.settings))
 
     def _create_config_file(self):
-        project_config_file = os.path.join(self.project_directory, "project.ft")
+        project_config_file = os.path.join(self.settings.project_directory, "project.ft")
         with open(project_config_file, "a") as file:
-            for setting in self.settings:
-                file.write("%s: %s\n" % (setting, self.settings[setting]))
+            settings = vars(self.settings)
+            for setting in settings:
+                file.write("%s: %s\n" % (setting, settings[setting]))
 
     def _setup_phase(self):
         self.log.debug("_setup_phase".upper())
-        if not os.path.exists(self.settings["workspace"]):
-            raise Exception()
-        self.project_template_file = os.path.join(self.settings["templates"], "project", self.settings["project_template"])
-        if not os.path.exists(self.project_template_file):
-            raise Exception()
-        self.project_directory = os.path.join(self.settings["workspace"], self.settings["name"])
 
     def _pre_project_structure_phase(self):
         self.log.debug("_pre_project_structure_phase".upper())
@@ -62,13 +53,13 @@ class FtBaseProject:
     def _project_structure_phase(self):
         self.log.debug("_project_structure_phase".upper())
         try:
-            os.mkdir(self.project_directory)
+            os.mkdir(self.settings.project_directory)
         except FileExistsError:
-            raise Exception("Project %s already exists!" % self.project_directory)
+            raise Exception("Project %s already exists!" % self.settings.project_directory)
         project_template_parser = ProjectTemplateParser(self.project_template_file)
-        directories, self.files = project_template_parser.get_project_items()
+        directories, files = project_template_parser.get_project_items()
         self._create_directories(directories)
-        self._create_files(self.files)
+        self._create_files(files)
 
     def _post_project_structure_phase(self):
         self.log.debug("_post_project_structure".upper())

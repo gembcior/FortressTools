@@ -1,4 +1,4 @@
-#include "cubemx/cubemx.h"
+#include "cubemx/main.h"
 #include "cubemx/usart.h"
 #include "hal/hal_usart.h"
 

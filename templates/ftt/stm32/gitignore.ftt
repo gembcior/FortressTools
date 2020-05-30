@@ -8,10 +8,6 @@ build/**
 **/install_manifest.txt
 **/compile_commands.json
 
-# CubeMX
-cubemx/**
-!cubemx/*.ioc
-
 # CTags
 tags
 

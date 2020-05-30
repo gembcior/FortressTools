@@ -1,42 +1,30 @@
 cmake_minimum_required(VERSION 3.15)
 
-if(NOT UNIT_TEST)
+include(Utils)
 
-  add_executable(main)
+add_executable(main)
 
-  target_sources(main
-    PRIVATE
-      src/main.cpp
-  )
+target_sources(main
+  PRIVATE
+    src/main.cpp
+)
 
-  target_include_directories(main
-    PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/inc/main
-  )
+target_include_directories(main
+  PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src
+)
 
-  target_link_libraries(main
-    PRIVATE
-      irq
-      crt
-      hal
-      trace
-  )
+target_link_libraries(main PRIVATE
+  crt
+  startup
+  hal
+  trace
+)
 
-  set_property(TARGET main PROPERTY SUFFIX .elf)
-  stm32_target_size(main)
-  stm32_target_listing(main)
+set_property(TARGET main PROPERTY LINK_INTERFACE_MULTIPLICITY 3)
+set_property(TARGET main PROPERTY SUFFIX .elf)
 
-  install(TARGETS main
-    DESTINATION bin ${CMAKE_INSTALL_BINDIR}
-  )
-  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/main.lst
-    DESTINATION bin ${CMAKE_INSTALL_BINDIR}
-  )
+stm32_target_size(main)
+stm32_target_listing(main)
+stm32_target_install(main)
 
-# Vim YouCompleteMe plugin
-# Create symbolic link to compile_commands.json
-  add_custom_command(TARGET main
-    POST_BUILD
-    COMMAND find ${CMAKE_BINARY_DIR} -type f -name "compile_commands.json" -exec ln -sf {} ${CMAKE_SOURCE_DIR} "\;"
-  )
-
-endif()
+link_compile_commands_file(main)

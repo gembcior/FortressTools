@@ -1,35 +1,14 @@
-#ifndef IMAIN_H_
-#define IMAIN_H_
+#ifndef IMAIN_H
+#define IMAIN_H
 
 #include <cstdint>
 #include "hal/hal_gpio.h"
 
 namespace stm32::hal {
 
-constexpr GpioPin BUTTON1     = {.port = PortType::PortC, .pin = PinNumber::Pin13};
-constexpr GpioPin BUTTON_COL1 = {.port = PortType::PortB, .pin = PinNumber::Pin8};
-constexpr GpioPin BUTTON_COL2 = {.port = PortType::PortB, .pin = PinNumber::Pin9};
-constexpr GpioPin BUTTON_COL3 = {.port = PortType::PortB, .pin = PinNumber::Pin12};
-constexpr GpioPin BUTTON_COL4 = {.port = PortType::PortB, .pin = PinNumber::Pin14};
-constexpr GpioPin BUTTON_ROW1 = {.port = PortType::PortB, .pin = PinNumber::Pin0};
-constexpr GpioPin BUTTON_ROW2 = {.port = PortType::PortB, .pin = PinNumber::Pin1};
-constexpr GpioPin BUTTON_ROW3 = {.port = PortType::PortB, .pin = PinNumber::Pin2};
-constexpr GpioPin BUTTON_ROW4 = {.port = PortType::PortB, .pin = PinNumber::Pin7};
-constexpr GpioPin LCD_BL      = {.port = PortType::PortC, .pin = PinNumber::Pin7};
-constexpr GpioPin LCD_CS      = {.port = PortType::PortB, .pin = PinNumber::Pin6};
-constexpr GpioPin LCD_DC      = {.port = PortType::PortA, .pin = PinNumber::Pin8};
-constexpr GpioPin LCD_RST     = {.port = PortType::PortA, .pin = PinNumber::Pin9};
-constexpr GpioPin LED2        = {.port = PortType::PortC, .pin = PinNumber::Pin9};
-constexpr GpioPin LED3        = {.port = PortType::PortC, .pin = PinNumber::Pin8};
-constexpr GpioPin LED4        = {.port = PortType::PortC, .pin = PinNumber::Pin5};
-constexpr GpioPin MATRIX_CS   = {.port = PortType::PortC, .pin = PinNumber::Pin2};
-constexpr GpioPin SD_CS       = {.port = PortType::PortB, .pin = PinNumber::Pin4};
-constexpr GpioPin TCK         = {.port = PortType::PortA, .pin = PinNumber::Pin14};
-constexpr GpioPin TMS         = {.port = PortType::PortA, .pin = PinNumber::Pin13};
-constexpr GpioPin TP_BUSY     = {.port = PortType::PortB, .pin = PinNumber::Pin10};
-constexpr GpioPin TP_CS       = {.port = PortType::PortB, .pin = PinNumber::Pin5};
-constexpr GpioPin TP_IRQ      = {.port = PortType::PortB, .pin = PinNumber::Pin3};
+constexpr GpioPin Button  = {.port = PortType::PortC, .pin = PinNumber::Pin13};
+constexpr GpioPin Led     = {.port = PortType::PortA, .pin = PinNumber::Pin5};
 
 } // namespace
 
-#endif /* IMAIN_H_ */
+#endif /* IMAIN_H */

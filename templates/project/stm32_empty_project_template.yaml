@@ -1,0 +1,68 @@
+---
+structure:
+  cmake:
+    defaults:
+      stm32_cache.cmake : cmake_defaults_stm32_cache.ftt
+    modules:
+      FindCMSIS.cmake : cmake_modules_find_cmsis.ftt
+      FindSTM32HAL.cmake : cmake_modules_find_stm32_hal.ftt
+      Utils.cmake : cmake_modules_utils.ftt
+    toolchain:
+      gcc_stm32.cmake : cmake_toolchain_gcc_stm32.ftt
+  cubemx:
+  utils:
+    openocd.cfg : utils_openocd.ftt
+  source:
+    main:
+      src:
+        main.h : source_main_header_main.ftt
+        startup.h : source_main_header_startup.ftt
+        main.cpp : source_main_cpp_main.ftt
+        startup.cpp : source_main_cpp_startup.ftt
+      CMakeLists.txt : source_main_cmakelists.ftt
+    crt:
+      linker_script.ld : None
+      startup.s : None
+      CMakeLists.txt : source_crt_cmakelists.ftt
+    cubemx:
+      inc:
+        cubemx:
+      src:
+      CMakeLists.txt : source_cubemx_cmakelists.ftt
+    irq:
+      inc:
+        irq:
+          irq.h : source_irq_header_irq.ftt
+      src:
+        irq.cpp : source_irq_cpp_irq.ftt
+      CMakeLists.txt : source_irq_cmakelists.ftt
+    hal:
+      inc:
+        hal:
+          hal_cpu.h : source_hal_header_hal_cpu.ftt
+          hal_gpio.h : source_hal_header_hal_gpio.ftt
+          hal_uart.h : source_hal_header_hal_uart.ftt
+      src:
+        hal_gpio.cpp : source_hal_cpp_hal_gpio.ftt
+        hal_uart.cpp : source_hal_cpp_hal_uart.ftt
+        hal_cpu.cpp : source_hal_cpp_hal_cpu.ftt
+      CMakeLists.txt : source_hal_cmakelists.ftt
+    trace:
+      inc:
+        trace:
+          string_stream.h : source_trace_header_string_stream.ftt
+          trace.h : source_trace_header_trace.ftt
+          uart_trace.h : source_trace_header_uart_trace.ftt
+      src:
+        string_stream.cpp : source_trace_cpp_string_stream.ftt
+        trace.cpp : source_trace_cpp_trace.ftt
+        uart_trace.cpp : source_trace_cpp_uart_trace.ftt
+      CMakeLists.txt : source_trace_cmakelists.ftt
+    CMakeLists.txt : source_cmakelists.ftt
+  CMakeLists.txt : cmakelists.ftt
+  .gitignore : gitignore.ftt
+params:
+  project:
+  - name: "STM32FtProject"
+  - stm32_toolchain: "toolchain"
+  - native_toolchain: "native"

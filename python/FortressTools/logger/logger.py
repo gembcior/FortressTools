@@ -12,4 +12,3 @@ class FtLogger:
         coloredlogs.install(level=verbose, logger=logger)
         return logger
 
-
