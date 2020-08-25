@@ -70,3 +70,13 @@ class FtStm32Settings(FtBaseSettings):
     @chip.setter
     def chip(self, value):
         self._chip = value.strip()
+
+    @property
+    def cubemx_origin_directory(self):
+        self._cubemx__directory = os.path.join(self.project_directory, "cubemx")
+        return self._cubemx__directory
+
+    @property
+    def cubemx_target_directory(self):
+        self._cubemx__directory = os.path.join(self.project_directory, "source", "cubemx")
+        return self._cubemx__directory

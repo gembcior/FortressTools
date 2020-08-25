@@ -59,9 +59,7 @@ def new_project():
     else:
         raise Exception()
 
-    utils = FtStm32Utils(stm32_settings, verbose=True)
-    utils._make_irq_lib()
-    #ft_project.make()
+    ft_project.make()
 
 
 def main():

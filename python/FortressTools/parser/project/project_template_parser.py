@@ -41,6 +41,7 @@ class ProjectTemplateParser:
             files = {}
         return directories, files
 
+# TODO replace with regex
     def get_line(self, line, params):
         begin_marker_index = line.find(self.begin_marker)
         begin_marker_end_index = begin_marker_index + len(self.begin_marker)
@@ -48,6 +49,6 @@ class ProjectTemplateParser:
         end_marker_end_index = end_marker_index + len(self.end_marker)
         if begin_marker_index < end_marker_index and begin_marker_index > 0 and begin_marker_index > 0:
             param = line[begin_marker_end_index:end_marker_index].split(".")
-            if params.get(param[1]) is not None:
-                line = line.replace(line[begin_marker_index:end_marker_end_index], params.get(param[1]))
+            if getattr(params, param[1]) is not None:
+                line = line.replace(line[begin_marker_index:end_marker_end_index], getattr(params, param[1]))
         return line

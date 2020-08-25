@@ -23,7 +23,7 @@ class FtBaseProject:
             os.makedirs(path, exist_ok=True)
 
     def _create_files(self, files):
-        project_params_parser = ProjectTemplateParser(self.project_template_file)
+        project_params_parser = ProjectTemplateParser(self.settings.project_template)
         for file in files:
             if files[file] != "None":
                 template_file = os.path.join(self.settings.templates, "ftt", self.settings.project_type, files[file])
@@ -56,7 +56,7 @@ class FtBaseProject:
             os.mkdir(self.settings.project_directory)
         except FileExistsError:
             raise Exception("Project %s already exists!" % self.settings.project_directory)
-        project_template_parser = ProjectTemplateParser(self.project_template_file)
+        project_template_parser = ProjectTemplateParser(self.settings.project_template)
         directories, files = project_template_parser.get_project_items()
         self._create_directories(directories)
         self._create_files(files)

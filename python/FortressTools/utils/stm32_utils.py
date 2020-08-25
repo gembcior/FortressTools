@@ -140,14 +140,13 @@ class FtStm32Utils():
 
         self._copy_cubemx_files()
 
-
     def _replace_file_in_project(self, source, destination):
         if not os.path.exists(source):
             raise Exception()
         project_directory = os.path.join(os.path.expanduser(self.settings.workspace), self.settings.name)
         if not os.path.exists(project_directory):
             raise Exception()
-        project_template_file = os.path.join(os.path.expanduser(self.settings.templates), "project", self.settings["project_template"])
+        project_template_file = os.path.join(os.path.expanduser(self.settings.templates), "project", self.settings.project_template)
         if not os.path.exists(project_template_file):
             raise Exception()
         project_template_parser = ProjectTemplateParser(project_template_file)
@@ -158,20 +157,70 @@ class FtStm32Utils():
                 copyfile(source, os.path.join(project_directory, file))
                 break
 
-    def _make_irq_lib(self):
-        src_source_dir = os.path.join(self.settings.project_directory, "cubemx", "Src")
-        src_dest_dir = os.path.join(self.settings.project_directory, "source", "cubemx", "src")
-        inc_dest_dir = os.path.join(self.settings.project_directory, "source", "cubemx", "inc", "cubemx")
-        for file in os.listdir(src_source_dir):
-            if re.search(".*_it.c", file):
-                irq_source_file = os.path.join(src_source_dir, file)
-        pattern = re.compile("(?<=void )(.*)(?=\(void\))")
-        irq_list = []
+    def _get_irq_list(self, irq_source_file):
+        irq_pattern = re.compile("(?<=void )(.*?)(?=\(void\))", re.MULTILINE)
         with open(irq_source_file, 'r') as f:
-            for line in f.readlines():
-                match = re.search(pattern, line)
-                if match:
-                    irq_list.append(match.group(0))
+            irq_list = re.findall(irq_pattern, f.read())
+        return irq_list
+
+    def _make_irq_header_file(self, irq_header_file, irq_list):
+        with open(irq_header_file, 'r') as f:
+            lines = f.readlines()
+        start_pattern = re.compile("^extern.*")
+        end_pattern = re.compile("^}")
+        for line in lines:
+            if re.search(start_pattern, line):
+                start_index = lines.index(line) + 1
+            if re.search(end_pattern, line):
+                end_index = lines.index(line)
+        lines = lines[:start_index] + lines[end_index:]
+        for i, irq in enumerate(irq_list):
+            irq_declaration = "  void %s(void) __attribute__ ((interrupt (\"IRQ\")));\n" % irq
+            lines.insert(start_index + i, irq_declaration)
+        with open(irq_header_file, 'w') as f:
+            f.writelines(lines)
+
+    def _make_irq_source_file(self, irq_origin_source_file, irq_source_file):
+        old_irq_list = self._get_irq_list(irq_source_file)
+        new_irq_list = self._get_irq_list(irq_origin_source_file)
+        irq_list = list(set(new_irq_list) - set(old_irq_list))
+        irq_pattern = re.compile("(?=void )(.*?)(?<=^[}])", re.MULTILINE | re.DOTALL)
+        with open(irq_origin_source_file, 'r') as f:
+            irq_definition_list = re.findall(irq_pattern, f.read())
+        comment_pattern = re.compile("(?=\/\*)(.*?)(?<=\*\/)", re.MULTILINE)
+        for i, irq in enumerate(irq_definition_list):
+            for comment in re.findall(comment_pattern, irq):
+                irq = irq.replace(comment, '')
+            irq_definition_list[i] = irq
+        for irq in irq_definition_list:
+            irq_pattern = re.compile("(?<=void )(.*?)(?=\(void\))", re.MULTILINE)
+            if re.search(irq_pattern, irq).group(0) in irq_list:
+                with open(irq_source_file, 'a') as f:
+                    string_to_write = "\n\n%s\n" % irq
+                    f.write(string_to_write)
+
+    def _make_irq_lib(self):
+        origin_source_dir = os.path.join(self.settings.cubemx_origin_directory, "Src")
+        irq_source_dir = os.path.join(self.settings.project_directory, "source", "irq", "src")
+        irq_header_dir = os.path.join(self.settings.project_directory, "source", "irq", "inc", "irq")
+
+        irq_file_pattern = re.compile(".*_it.c")
+        for file in os.listdir(origin_source_dir):
+            if re.search(irq_file_pattern, file):
+                irq_origin_source_file = os.path.join(origin_source_dir, file)
+
+        irq_file_pattern = re.compile("irq.cpp")
+        for file in os.listdir(irq_source_dir):
+            if re.search(irq_file_pattern, file):
+                irq_source_file = os.path.join(irq_source_dir, file)
+
+        irq_file_pattern = re.compile("irq.h")
+        for file in os.listdir(irq_header_dir):
+            if re.search(irq_file_pattern, file):
+                irq_header_file = os.path.join(irq_header_dir, file)
+
+        self._make_irq_header_file(irq_header_file, self._get_irq_list(irq_origin_source_file))
+        self._make_irq_source_file(irq_origin_source_file, irq_source_file)
 
     def _make_main_app(self):
         pass
@@ -188,6 +237,8 @@ class FtStm32Utils():
         chip["flash"] = name[10:11]
         return chip
 
+
+# TODO refactor
     def generate_cubemx_code(self, project, destination):
         if not os.path.exists(project):
             raise Exception()
@@ -217,6 +268,7 @@ class FtStm32Utils():
             self._replace_file_in_project(self._get_linker_script(), "linker_script.ld")
             self._replace_file_in_project(self._get_startup_file(), "startup.s")
             self._copy_cubemx_files()
+            self._make_irq_lib()
         else:
             self._update_cubemx_files_in_project()
 

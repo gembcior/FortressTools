@@ -34,7 +34,7 @@ structure:
         irq:
           irq.h : source_irq_header_irq.ftt
       src:
-        irq.cpp : None
+        irq.cpp : source_irq_cpp_irq.ftt
       CMakeLists.txt : source_irq_cmakelists.ftt
     hal:
       inc:
