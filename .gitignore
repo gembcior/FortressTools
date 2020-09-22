@@ -1,2 +1,4 @@
 **/FortressTools.egg-info
 **.pyc
+**/.eggs
+**/venv

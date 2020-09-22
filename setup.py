@@ -1,18 +1,21 @@
 import setuptools
 
-with open("README.md", "r") as fh:
-    long_description = fh.read()
+with open("README.md", "r") as f:
+    long_description = f.read()
 
 setuptools.setup(
     name="FortressTools",
-    version="0.0.6",
     author="mywayof.dev",
     author_email="gembcior@gmail.com",
     description="Personal Tools for development",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/gembcior/FortressTools.git",
+    include_package_data=True,
+    use_scm_version=True,
+    setup_requires=['setuptools_scm'],
     packages=setuptools.find_packages(),
+    scripts=['app/ftproject.py'],
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OTHER",

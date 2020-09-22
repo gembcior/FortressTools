@@ -1,0 +1,4 @@
+-e .
+pyyaml
+coloredlogs
+diff_match_patch

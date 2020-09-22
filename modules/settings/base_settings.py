@@ -1,4 +1,5 @@
 import os
+import importlib.resources as resources
 
 class FtBaseSettings:
     def __init__(self):
@@ -48,11 +49,11 @@ class FtBaseSettings:
 
     @project_template.setter
     def project_template(self, value):
-        project_template = os.path.join(self.templates, "project", value)
-        if os.path.exists(project_template):
-            self._project_template = project_template
-        else:
-            raise Exception("Unable to set project_template property. File does not exist.")
+        with resources.path("templates.project", value) as project_template_path:
+            if os.path.exists(project_template_path):
+                self._project_template = project_template_path
+            else:
+                raise Exception("Unable to set project_template property. File does not exist.")
 
     @property
     def project_type(self):
