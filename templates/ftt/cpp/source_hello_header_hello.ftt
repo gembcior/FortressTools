@@ -1,0 +1,14 @@
+#ifndef HELLO_H
+#define HELLO_H
+
+namespace cpp::hello {
+
+class Hello
+{
+public:
+  void sayHello();
+};
+
+} // namespace
+
+#endif /* HELLO_H */

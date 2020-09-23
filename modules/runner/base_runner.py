@@ -1,5 +1,5 @@
 from modules.parser.config.config_parser import ConfigParser
-import importlib.resources
+import importlib.resources as resources
 
 class BaseRunner:
     def __init__(self):
@@ -13,8 +13,8 @@ class BaseRunner:
         #settings["name"] = input("Project name: ")
         #settings["type"] = input("Project type: ")
         self._settings["name"] = "TestProject"
-        self._settings["project_type"] = "stm32"
-        with importlib.resources.path('config', 'default.cfg') as config:
+        self._settings["project_type"] = "cpp"
+        with resources.path('config', 'default.cfg') as config:
             self._settings.update(ConfigParser.get_config(config, self._settings["project_type"]))
         return self._settings
 

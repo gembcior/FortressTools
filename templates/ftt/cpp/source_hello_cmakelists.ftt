@@ -1,0 +1,13 @@
+add_library(hello STATIC)
+
+target_sources(hello
+  PRIVATE
+    src/hello.cpp
+)
+
+target_include_directories(hello
+  PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/inc
+  PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/src
+)

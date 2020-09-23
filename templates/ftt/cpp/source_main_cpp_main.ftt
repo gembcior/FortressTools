@@ -1,0 +1,10 @@
+#include "main.h"
+#include "hello/hello.h"
+
+using namespace cpp::hello;
+
+int main(void)
+{
+  Hello speaker;
+  speaker.sayHello();
+}

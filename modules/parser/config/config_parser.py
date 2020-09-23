@@ -7,4 +7,7 @@ class ConfigParser:
         if not os.path.exists(config):
             raise Exception()
         settings = yaml.load(open(config, 'r'), Loader=yaml.FullLoader)
-        return {**settings["general"], **settings[project_type]}
+        if settings[project_type] is not None:
+            return {**settings["general"], **settings[project_type]}
+        else:
+            return {**settings["general"]}

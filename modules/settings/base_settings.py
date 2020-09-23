@@ -5,7 +5,6 @@ class FtBaseSettings:
     def __init__(self):
         self._name = None
         self._workspace = None
-        self._templates = None
         self._project_template = None
         self._project_type = None
 
@@ -31,25 +30,12 @@ class FtBaseSettings:
             raise Exception("Unable to set workspace property. Directory does not exist.")
 
     @property
-    def templates(self):
-        return self._templates
-
-    @templates.setter
-    def templates(self, value):
-        templates = os.path.expanduser(value)
-        templates = os.path.abspath(templates)
-        if os.path.exists(templates):
-            self._templates = templates
-        else:
-            raise Exception("Unable to set templates property. Directory does not exist.")
-
-    @property
     def project_template(self):
         return self._project_template
 
     @project_template.setter
     def project_template(self, value):
-        with resources.path("templates.project", value) as project_template_path:
+        with resources.path("templates.project." + self.project_type, value) as project_template_path:
             if os.path.exists(project_template_path):
                 self._project_template = project_template_path
             else:

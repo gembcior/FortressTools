@@ -1,0 +1,26 @@
+---
+structure:
+  cmake:
+    defaults:
+      cpp_cache.cmake : cmake_defaults_cpp_cache.ftt
+    modules:
+      Utils.cmake : cmake_modules_utils.ftt
+    toolchain:
+      gcc.cmake : cmake_toolchain_gcc.ftt
+      clang.cmake : cmake_toolchain_clang.ftt
+  source:
+    main:
+      src:
+        main.h : source_main_header_main.ftt
+        main.cpp : source_main_cpp_main.ftt
+      CMakeLists.txt : source_main_cmakelists.ftt
+    hello:
+      inc:
+        hello:
+          hello.h : source_hello_header_hello.ftt
+      src:
+        hello.cpp : source_hello_cpp_hello.ftt
+      CMakeLists.txt : source_hello_cmakelists.ftt
+    CMakeLists.txt : source_cmakelists.ftt
+  CMakeLists.txt : cmakelists.ftt
+  .gitignore : gitignore.ftt

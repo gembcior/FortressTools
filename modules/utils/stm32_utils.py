@@ -4,9 +4,10 @@ import tempfile
 import subprocess
 import re
 from shutil import copyfile
-from ..parser.project.project_template_parser import ProjectTemplateParser
-from ..logger.logger import FtLogger
+from modules.parser.project.project_template_parser import ProjectTemplateParser
+from modules.logger.logger import FtLogger
 import diff_match_patch as diff_tool
+import importlib.resources as resources
 
 
 class FtStm32Utils():
@@ -52,9 +53,8 @@ class FtStm32Utils():
         else:
             raise Exception()
 
-    def _get_startup_file(self):
+    def _find_startup_file(self, chip):
         path_pattern = re.compile(".*Drivers/CMSIS/Device/ST/.*/Source/Templates/gcc")
-        chip = self.chip["family"] + self.chip["type"] + self.chip["core"] + self.chip["line"] + "x" + self.chip["flash"]
         startup_file_pattern = re.compile("startup_" + chip + ".s")
         found = None
         for path, dirs, files in os.walk(os.path.expanduser(self.settings.cube)):
@@ -67,10 +67,17 @@ class FtStm32Utils():
                                 break
                         else: break
             else: break
-        if found is not None:
-            return found
-        else:
-            raise Exception()
+        return found
+
+    def _get_startup_file(self):
+        chip_names = [self.chip["family"] + self.chip["type"] + self.chip["core"] + self.chip["line"] + "x" + "x",
+                      self.chip["family"] + self.chip["type"] + self.chip["core"] + self.chip["line"] + "x" + self.chip["flash"],
+                      self.chip["family"] + self.chip["type"] + self.chip["core"] + self.chip["line"] + self.chip["pins"] + "x"]
+        for chip in chip_names:
+            result = self._find_startup_file(chip)
+            if result is not None:
+                return result
+        raise Exception("Unable to find startup file for chip: " + self.settings.chip)
 
     def _diff(self, file1, file2):
         dmp = diff_tool.diff_match_patch()
@@ -146,7 +153,7 @@ class FtStm32Utils():
         project_directory = os.path.join(os.path.expanduser(self.settings.workspace), self.settings.name)
         if not os.path.exists(project_directory):
             raise Exception()
-        project_template_file = os.path.join(os.path.expanduser(self.settings.templates), "project", self.settings.project_template)
+        project_template_file = self.settings.project_template
         if not os.path.exists(project_template_file):
             raise Exception()
         project_template_parser = ProjectTemplateParser(project_template_file)

@@ -1,0 +1,13 @@
+cmake_minimum_required(VERSION 3.15)
+project([ftt]project.name[#ftt])
+
+include(ExternalProject)
+
+ExternalProject_Add(cpp
+  PREFIX            cpp
+  SOURCE_DIR        "${CMAKE_CURRENT_SOURCE_DIR}/source"
+  TEST_COMMAND      ""
+  STEP_TARGETS      configure install
+  BUILD_ALWAYS      TRUE
+  CMAKE_ARGS        -C ${CMAKE_CURRENT_SOURCE_DIR}/cmake/defaults/cpp_cache.cmake
+)

@@ -1,7 +1,8 @@
+from modules.parser.project.project_template_parser import ProjectTemplateParser
+from modules.logger.logger import FtLogger
 import logging
 import os
-from ..parser.project.project_template_parser import ProjectTemplateParser
-from ..logger.logger import FtLogger
+import importlib.resources as resources
 
 
 class FtBaseProject:
@@ -26,16 +27,16 @@ class FtBaseProject:
         project_params_parser = ProjectTemplateParser(self.settings.project_template)
         for file in files:
             if files[file] != "None":
-                template_file = os.path.join(self.settings.templates, "ftt", self.settings.project_type, files[file])
-                if not os.path.exists(template_file):
-                    self.log.warning("Missing template file: " + template_file)
-                    continue
-                else:
-                    with open(template_file, 'r') as template:
-                        for line in template.readlines():
-                            output_file = os.path.join(self.settings.workspace, self.settings.name, file)
-                            with open(output_file, 'a') as output_file_temp:
-                                output_file_temp.write(project_params_parser.get_line(line, self.settings))
+                with resources.path("templates.ftt." + self.settings.project_type, files[file]) as template_file:
+                    if not os.path.exists(template_file):
+                        self.log.warning("Missing template file: " + template_file)
+                        continue
+                    else:
+                        with open(template_file, 'r') as template:
+                            for line in template.readlines():
+                                output_file = os.path.join(self.settings.workspace, self.settings.name, file)
+                                with open(output_file, 'a') as output_file_temp:
+                                    output_file_temp.write(project_params_parser.get_line(line, self.settings))
 
     def _create_config_file(self):
         project_config_file = os.path.join(self.settings.project_directory, "project.ft")
