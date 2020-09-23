@@ -4,8 +4,8 @@ from ..utils.stm32_utils import FtStm32Utils
 
 
 class FtStm32Project(FtBaseProject):
-    def __init__(self, settings):
-        super(FtStm32Project, self).__init__(settings)
+    def __init__(self, settings, verbose=False):
+        super(FtStm32Project, self).__init__(settings, verbose)
         self.chip = FtStm32Utils.parse_chip_name(self.settings.chip)
         self.settings.cube = os.path.join(self.settings.cube, "STM32Cube" + self.chip["type"].upper() + self.chip["core"].upper())
 

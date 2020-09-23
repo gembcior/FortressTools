@@ -5,10 +5,14 @@ import argparse
 
 CMD_NONE = 0
 CMD_NEW_PROJECT = 1
+CMD_GUI = 2
 
 SUPPORTED_PROJECTS = {"stm32": Stm32Runner(),
                       "cpp": CppRunner(),
                       "qt": QtRunner()}
+
+def menu():
+    pass
 
 def main():
     parser = argparse.ArgumentParser(description='Arguments')
@@ -25,6 +29,9 @@ def main():
 
     if args.command == CMD_NEW_PROJECT:
         SUPPORTED_PROJECTS[args.project_type].new_project()
+    elif args.command == CMD_GUI:
+        menu()
+
 
 
 if __name__ == "__main__":
