@@ -1,11 +1,11 @@
-from ..projects.base_project import FtBaseProject
+from modules.project.base_project import FtBaseProject
+from modules.parser.project.project_template_parser import ProjectTemplateParser
+from modules.logger.logger import FtLogger
 import os
 import tempfile
 import subprocess
 import re
 from shutil import copyfile
-from modules.parser.project.project_template_parser import ProjectTemplateParser
-from modules.logger.logger import FtLogger
 import diff_match_patch as diff_tool
 import importlib.resources as resources
 

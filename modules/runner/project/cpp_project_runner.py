@@ -1,10 +1,10 @@
-from modules.runner.base_runner import BaseRunner
-from modules.settings.cpp_settings import FtCppSettings
-from modules.projects.cpp_project import FtCppProject
+from modules.runner.project.base_project_runner import BaseProjectRunner
+from modules.settings.project.cpp_settings import FtCppSettings
+from modules.project.cpp_project import FtCppProject
 
-class CppRunner(BaseRunner):
+class CppProjectRunner(BaseProjectRunner):
     def __init__(self):
-        super(CppRunner, self).__init__()
+        super(CppProjectRunner, self).__init__()
         self._settings_object = FtCppSettings()
         self._project_object = FtCppProject
 

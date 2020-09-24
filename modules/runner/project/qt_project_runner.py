@@ -1,8 +1,8 @@
-from modules.runner.base_runner import BaseRunner
+from modules.runner.project.base_project_runner import BaseProjectRunner
 
-class QtRunner(BaseRunner):
+class QtProjectRunner(BaseProjectRunner):
     def __init__(self):
-        super(BaseRunner, self).__init__()
+        super(QtProjectRunner, self).__init__()
 
     @property
     def settings(self):

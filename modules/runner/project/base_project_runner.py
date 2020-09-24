@@ -1,7 +1,7 @@
 from modules.parser.config.config_parser import ConfigParser
 import importlib.resources as resources
 
-class BaseRunner:
+class BaseProjectRunner:
     def __init__(self):
         self._settings = {}
         self._settings_object = None

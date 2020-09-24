@@ -1,5 +1,5 @@
+from modules.settings.project.base_settings import FtBaseSettings
 import os
-from .base_settings import FtBaseSettings
 
 
 class FtStm32Settings(FtBaseSettings):

@@ -1,7 +1,15 @@
 import setuptools
+import os
+
+def get_scripts_list():
+    scripts_list = os.listdir("app")
+    scripts_list.remove('__init__.py')
+    scripts_list = ["app/" + x for x in scripts_list]
+    return scripts_list
 
 with open("README.md", "r") as f:
     long_description = f.read()
+
 
 setuptools.setup(
     name="FortressTools",
@@ -15,7 +23,7 @@ setuptools.setup(
     use_scm_version=True,
     setup_requires=['setuptools_scm'],
     packages=setuptools.find_packages(),
-    scripts=['app/ftproject.py'],
+    scripts=get_scripts_list(),
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OTHER",
