@@ -1,0 +1,10 @@
+---
+structure:
+  app:
+    __init__.py: init.ftt
+    app.py: app.ftt
+  modules:
+    __init__.py: init.ftt
+  requirements.txt : requirements.ftt
+  setup.py : setup.ftt
+  .gitignore : gitignore.ftt
