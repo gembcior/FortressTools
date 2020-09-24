@@ -31,4 +31,9 @@ setuptools.setup(
         "Private :: Do Not Upload to public pypi server"
     ],
     python_requires='>=3.6',
+    install_requires=[
+        'pyyaml',
+        'coloredlogs',
+        'diff_match_patch'
+    ],
 )
