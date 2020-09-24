@@ -1,5 +1,5 @@
-from modules.parser.project.project_template_parser import ProjectTemplateParser
-from modules.logger.logger import FtLogger
+from ..parser.project.project_template_parser import ProjectTemplateParser
+from ..logger.logger import FtLogger
 import logging
 import os
 import importlib.resources as resources
@@ -37,6 +37,9 @@ class FtBaseProject:
                                 output_file = os.path.join(self.settings.workspace, self.settings.name, file)
                                 with open(output_file, 'a') as output_file_temp:
                                     output_file_temp.write(project_params_parser.get_line(line, self.settings))
+            else:
+                output_file = os.path.join(self.settings.project_directory, file)
+                open(output_file, 'w').close()
 
     def _create_config_file(self):
         project_config_file = os.path.join(self.settings.project_directory, "project.ft")

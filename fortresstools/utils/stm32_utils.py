@@ -1,6 +1,6 @@
-from modules.project.base_project import FtBaseProject
-from modules.parser.project.project_template_parser import ProjectTemplateParser
-from modules.logger.logger import FtLogger
+from ..project.base_project import FtBaseProject
+from ..parser.project.project_template_parser import ProjectTemplateParser
+from ..logger.logger import FtLogger
 import os
 import tempfile
 import subprocess

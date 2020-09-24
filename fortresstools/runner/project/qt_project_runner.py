@@ -1,4 +1,4 @@
-from modules.runner.project.base_project_runner import BaseProjectRunner
+from .base_project_runner import BaseProjectRunner
 
 class QtProjectRunner(BaseProjectRunner):
     def __init__(self):

@@ -1,6 +1,6 @@
-from modules.runner.project.base_project_runner import BaseProjectRunner
-from modules.settings.project.cpp_settings import FtCppSettings
-from modules.project.cpp_project import FtCppProject
+from .base_project_runner import BaseProjectRunner
+from ...settings.project.cpp_settings import FtCppSettings
+from ...project.cpp_project import FtCppProject
 
 class CppProjectRunner(BaseProjectRunner):
     def __init__(self):

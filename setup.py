@@ -3,7 +3,6 @@ import os
 
 def get_scripts_list():
     scripts_list = os.listdir("app")
-    scripts_list.remove('__init__.py')
     scripts_list = ["app/" + x for x in scripts_list]
     return scripts_list
 

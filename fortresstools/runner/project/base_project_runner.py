@@ -1,4 +1,4 @@
-from modules.parser.config.config_parser import ConfigParser
+from ...parser.config.config_parser import ConfigParser
 import importlib.resources as resources
 
 class BaseProjectRunner:

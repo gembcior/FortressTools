@@ -1,6 +1,6 @@
-from modules.runner.project.base_project_runner import BaseProjectRunner
-from modules.settings.project.stm32_settings import FtStm32Settings
-from modules.project.stm32_project import FtStm32Project
+from .base_project_runner import BaseProjectRunner
+from ...settings.project.stm32_settings import FtStm32Settings
+from ...project.stm32_project import FtStm32Project
 
 class Stm32ProjectRunner(BaseProjectRunner):
     def __init__(self):

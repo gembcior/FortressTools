@@ -1,4 +1,4 @@
-from modules.settings.project.base_settings import FtBaseSettings
+from .base_settings import FtBaseSettings
 
 
 class FtCppSettings(FtBaseSettings):

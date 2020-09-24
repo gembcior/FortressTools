@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
-from modules.runner.project.stm32_project_runner import Stm32ProjectRunner
-from modules.runner.project.cpp_project_runner import CppProjectRunner
-from modules.runner.project.qt_project_runner import QtProjectRunner
-from modules.runner.project.python_project_runner import PythonProjectRunner
+from fortresstools.runner.project.stm32_project_runner import Stm32ProjectRunner
+from fortresstools.runner.project.cpp_project_runner import CppProjectRunner
+from fortresstools.runner.project.qt_project_runner import QtProjectRunner
+from fortresstools.runner.project.python_project_runner import PythonProjectRunner
 import argparse
 import curses
 import time

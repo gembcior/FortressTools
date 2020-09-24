@@ -1,6 +1,6 @@
 import os
-from modules.project.base_project import FtBaseProject
-from modules.utils.stm32_utils import FtStm32Utils
+from .base_project import FtBaseProject
+from ..utils.stm32_utils import FtStm32Utils
 
 
 class FtStm32Project(FtBaseProject):

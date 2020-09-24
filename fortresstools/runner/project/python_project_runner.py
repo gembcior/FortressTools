@@ -1,6 +1,6 @@
-from modules.runner.project.base_project_runner import BaseProjectRunner
-from modules.settings.project.python_settings import FtPythonSettings
-from modules.project.python_project import FtPythonProject
+from .base_project_runner import BaseProjectRunner
+from ...settings.project.python_settings import FtPythonSettings
+from ...project.python_project import FtPythonProject
 
 class PythonProjectRunner(BaseProjectRunner):
     def __init__(self):

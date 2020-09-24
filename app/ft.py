@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from modules.menu.menu import FtMenu
+from fortresstools.menu.menu import FtMenu
 from app.ftproject import run as FtProject
 import os
 
