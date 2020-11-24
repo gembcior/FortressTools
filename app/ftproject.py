@@ -27,7 +27,7 @@ def main():
     parser.add_argument("-n", "--new",
                         action="store_const", dest="command", const=CMD_NEW_PROJECT, required=False,
                         help='Create new project')
-    parser.add_argument("-t" "--type",
+    parser.add_argument("-t", "--type",
                         action="store", dest="project_type", required=False,
                         help="Type of project to work on")
     parser.add_argument("-v", "--verbose",

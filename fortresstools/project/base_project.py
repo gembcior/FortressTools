@@ -27,7 +27,7 @@ class FtBaseProject:
         project_params_parser = ProjectTemplateParser(self.settings.project_template)
         for file in files:
             if files[file] != "None":
-                with resources.path("templates.ftt." + self.settings.project_type, files[file]) as template_file:
+                with resources.path(__name__.split(".")[0] + ".templates.ftt." + self.settings.project_type, files[file]) as template_file:
                     if not os.path.exists(template_file):
                         self.log.warning("Missing template file: " + template_file)
                         continue

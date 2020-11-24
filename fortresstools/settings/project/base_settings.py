@@ -35,7 +35,7 @@ class FtBaseSettings:
 
     @project_template.setter
     def project_template(self, value):
-        with resources.path("templates.project." + self.project_type, value) as project_template_path:
+        with resources.path(__name__.split(".")[0] + ".templates.project." + self.project_type, value) as project_template_path:
             if os.path.exists(project_template_path):
                 self._project_template = project_template_path
             else:
