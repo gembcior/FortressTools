@@ -53,3 +53,12 @@ class FtBaseSettings:
     def project_directory(self):
         self._project_directory = os.path.join(self.workspace, self.name)
         return self._project_directory
+
+    @project_directory.setter
+    def project_directory(self, value):
+        project_directory = os.path.expanduser(value)
+        project_directory = os.path.abspath(project_directory)
+        if os.path.exists(project_directory):
+            self._project_directory = project_directory
+        else:
+            raise Exception("Unable to set project_directory property. Directory does not exist.")
