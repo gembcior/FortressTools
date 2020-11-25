@@ -46,7 +46,7 @@ class FtBaseProject:
         with open(project_config_file, "a") as file:
             settings = vars(self.settings)
             for setting in settings:
-                file.write("%s: %s\n" % (setting, settings[setting]))
+                file.write("%s: %s\n" % (setting.lstrip("_"), settings[setting]))
 
     def _setup_phase(self):
         self.log.debug("_setup_phase".upper())
